@@ -1,18 +1,31 @@
+// koi fish pond
+// water dropping into a pond
+
+Particle[] aParticles;
 Particle[] nParticles;
 void setup()
 {
 	size(500,500);
+	aParticles = new Particle[1];
+	for (int i = 0; i < aParticles.length; i++)
+	{
+		aParticles[i] = new OddballParticle();
+	}
 	nParticles = new Particle[100];
-	for (int i = 0; i < nParticles.length - 2; i++)
+	for (int i = 0; i < nParticles.length - 1; i++)
 	{
 		nParticles[i] = new NormalParticle();
 	}
-	nParticles[98] = new OddballParticle();
 	nParticles[99] = new JumboParticle();
 }
 void draw()
 {
 	background(0);
+	for (int i = 0; i < aParticles.length; i++)
+	{
+		aParticles[i].show();
+		aParticles[i].move();
+	}
 	for (int i = 0; i < nParticles.length; i++)
 	{
 		nParticles[i].show();
@@ -53,21 +66,23 @@ class OddballParticle implements Particle
 	int oColor;
 	OddballParticle()
 	{
-		oX = 0;
-		oY = 250;
+		oX = 250;
+		oY = 0;
 		oAngle = 0;
-		oSpeed = 5;
+		oSpeed = 3;
 		oColor = 255;
 	}
 	public void move()
 	{
-		oX = oX + cos((float)oAngle)*oSpeed;
-		oY = oY + sin((float)oAngle)*oSpeed;
+		oY = oY + oSpeed;
 	}
 	public void show()
 	{
-		fill(oColor);
-		ellipse((float)oX,(float)oY,10,10);
+		if (oY < 250)
+		{
+			fill(oColor);
+			ellipse((float)oX,(float)oY,10,10);
+		}
 	}
 }
 class JumboParticle extends NormalParticle
@@ -77,4 +92,3 @@ class JumboParticle extends NormalParticle
 		ellipse((float)nX,(float)nY,15,15);
 	}
 }
-
