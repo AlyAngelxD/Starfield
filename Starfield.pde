@@ -3,7 +3,7 @@
 
 Particle[] aParticles;
 Particle[] nParticles;
-void setup()
+public void setup()
 {
 	size(500,500);
 	aParticles = new Particle[1];
@@ -11,14 +11,14 @@ void setup()
 	{
 		aParticles[i] = new OddballParticle();
 	}
-	nParticles = new Particle[100];
+	nParticles = new Particle[1000];
 	for (int i = 0; i < nParticles.length - 1; i++)
 	{
 		nParticles[i] = new NormalParticle();
 	}
-	nParticles[99] = new JumboParticle();
+	nParticles[999] = new JumboParticle();
 }
-void draw()
+public void draw()
 {
 	background(0);
 	for (int i = 0; i < aParticles.length; i++)
@@ -26,11 +26,15 @@ void draw()
 		aParticles[i].show();
 		aParticles[i].move();
 	}
-	for (int i = 0; i < nParticles.length; i++)
+	if (aParticles[0].getOY() < 250)
 	{
-		nParticles[i].show();
-		nParticles[i].move();
+		for (int i = 0; i < nParticles.length; i++)
+		{
+			nParticles[i].show();
+			nParticles[i].move();
+		}
 	}
+	
 }
 class NormalParticle implements Particle 
 {
@@ -41,7 +45,7 @@ class NormalParticle implements Particle
 		nX = 250;
 		nY = 250;
 		nAngle = Math.random()*360;
-		nSpeed = Math.random()*10;
+		nSpeed = 3;
 		nColor = 150;
 	}
 	public void move()
@@ -62,8 +66,8 @@ interface Particle
 }
 class OddballParticle implements Particle
 {
-	double oX, oY, oAngle, oSpeed;
-	int oColor;
+	private double oX, oY, oAngle, oSpeed;
+	private int oColor;
 	OddballParticle()
 	{
 		oX = 250;
@@ -83,6 +87,10 @@ class OddballParticle implements Particle
 			fill(oColor);
 			ellipse((float)oX,(float)oY,10,10);
 		}
+	}
+	public double getOY()
+	{
+		return oY;
 	}
 }
 class JumboParticle extends NormalParticle
