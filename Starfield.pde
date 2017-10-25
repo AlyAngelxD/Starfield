@@ -26,7 +26,7 @@ public void draw()
 		aParticles[i].show();
 		aParticles[i].move();
 	}
-	if (aParticles[0].getOY() < 250)
+	if (((OddballParticle)aParticles[0]).getOY() > 250)
 	{
 		for (int i = 0; i < nParticles.length; i++)
 		{
